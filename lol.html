@@ -1104,9 +1104,17 @@
                 allCompletedItems = [];
 
                 for (const [id, item] of items) {
+                    // Skip Arena/special mode items (6+ digit IDs like 323xxx, 663xxx, 667xxx)
+                    if (id.length > 4) continue;
+
                     // Only items available on Summoner's Rift (map 11) and purchasable
                     if (!item.maps || !item.maps['11']) continue;
                     if (item.gold && !item.gold.purchasable) continue;
+
+                    // Skip items not available in the shop or champion-specific items
+                    if (item.inStore === false) continue;
+                    if (item.requiredChampion) continue;
+                    if (item.requiredAlly) continue;
 
                     // Skip consumables, trinkets, jungle items, support items starter
                     if (item.tags && item.tags.includes('Trinket')) continue;
