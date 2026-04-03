@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta Russa - Escolha seu Jogo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C89B3C;
+            --gold-light: #F0E6D2;
+            --gold-dark: #785A28;
+            --blue-dark: #010A13;
+            --blue-mid: #091428;
+            --blue-light: #0A1428;
+            --text-primary: #F0E6D2;
+            --text-secondary: #A09B8C;
+            --valorant-red: #FF4655;
+            --valorant-dark: #0F1419;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 50%, var(--blue-light) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(200, 155, 60, 0.5);
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        /* Game Cards Container */
+        .games-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        /* Game Card */
+        .game-card {
+            width: 320px;
+            height: 400px;
+            background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(13, 13, 13, 0.9));
+            border: 3px solid var(--gold-dark);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, transparent, rgba(200, 155, 60, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(200, 155, 60, 0.3);
+        }
+
+        .game-card.valorant:hover {
+            border-color: var(--valorant-red);
+            box-shadow: 0 20px 60px rgba(255, 70, 85, 0.3);
+        }
+
+        .game-icon {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .game-card.lol .game-icon {
+            color: var(--gold);
+            filter: drop-shadow(0 0 20px rgba(200, 155, 60, 0.5));
+        }
+
+        .game-card.valorant .game-icon {
+            color: var(--valorant-red);
+            filter: drop-shadow(0 0 20px rgba(255, 70, 85, 0.5));
+        }
+
+        .game-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .game-card.lol .game-title {
+            color: var(--gold);
+        }
+
+        .game-card.valorant .game-title {
+            color: var(--valorant-red);
+        }
+
+        .game-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Coming Soon Badge */
+        .coming-soon {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--valorant-red);
+            color: white;
+            padding: 8px 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .games-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .game-card {
+                width: 280px;
+                height: 350px;
+            }
+
+            .game-icon {
+                width: 120px;
+                height: 120px;
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ROLETA RUSSA</h1>
+        <p>Escolha seu jogo e descubra seu destino</p>
+    </div>
+
+    <div class="games-container">
+        <!-- League of Legends Card -->
+        <a href="lol.html" class="game-card lol">
+            <div class="game-icon">⚔️</div>
+            <div class="game-title">LEAGUE OF LEGENDS</div>
+            <div class="game-subtitle">Campeões</div>
+        </a>
+
+        <!-- Valorant Card -->
+        <a href="valorant.html" class="game-card valorant">
+            <div class="game-icon">🎯</div>
+            <div class="game-title">VALORANT</div>
+            <div class="game-subtitle">Agentes</div>
+        </a>
+    </div>
+
+    <div class="footer">
+        <p>Dados fornecidos por Riot Games Data Dragon & Valorant-API</p>
+    </div>
+</body>
+</html>
