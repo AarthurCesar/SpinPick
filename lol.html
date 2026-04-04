@@ -736,6 +736,239 @@
             color: white;
         }
 
+        /* Chaos Grid Layout */
+        .chaos-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .chaos-row {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(155, 89, 182, 0.25);
+            border-radius: 8px;
+        }
+
+        .chaos-row.visible {
+            display: flex;
+        }
+
+        .chaos-items-box {
+            display: flex;
+            border-color: rgba(155, 89, 182, 0.5);
+            padding: 14px;
+        }
+
+        .chaos-row-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            color: #9b59b6;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            min-width: 70px;
+            text-align: right;
+            margin-right: 14px;
+        }
+
+        .chaos-row-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-order {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .skill-key {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-spell-img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .skill-spell-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+        }
+
+        .skill-letter {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 6px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,1);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .skill-key.first { border: 3px solid #e74c3c; box-shadow: 0 0 8px rgba(231, 76, 60, 0.5); }
+        .skill-key.second { border: 3px solid #f39c12; box-shadow: 0 0 8px rgba(243, 156, 18, 0.5); }
+        .skill-key.third { border: 3px solid #3498db; box-shadow: 0 0 8px rgba(52, 152, 219, 0.5); }
+
+        .skill-arrow {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .skill-label {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .rune-page {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .rune-tree-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rune-tree-header {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .rune-tree-header.primary { color: var(--gold); }
+        .rune-tree-header.secondary { color: #9b59b6; }
+
+        .rune-icon {
+            border-radius: 50%;
+            border: 2px solid #9b59b6;
+            overflow: hidden;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .rune-icon.keystone {
+            width: 48px;
+            height: 48px;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(200, 155, 60, 0.3);
+        }
+
+        .rune-icon.minor {
+            width: 32px;
+            height: 32px;
+        }
+
+        .rune-icon:hover {
+            border-color: #c39bd3;
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.6);
+            transform: scale(1.15);
+        }
+
+        .rune-icon.keystone:hover {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 15px rgba(200, 155, 60, 0.6);
+        }
+
+        .rune-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rune-keystone-name {
+            font-size: 0.65rem;
+            color: var(--gold-light);
+            font-weight: 600;
+            max-width: 100px;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .rune-minor-row {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .rune-divider {
+            width: 1px;
+            height: 80%;
+            min-height: 60px;
+            background: rgba(155, 89, 182, 0.3);
+            align-self: center;
+        }
+
+        /* Summoner Spells */
+        .spells-display {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .spell-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
+            border: 2px solid #9b59b6;
+            overflow: hidden;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+        }
+
+        .spell-icon:hover {
+            border-color: #c39bd3;
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.6);
+            transform: scale(1.15);
+        }
+
+        .spell-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spell-item {
+            text-align: center;
+        }
+
+        .spell-name {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+            max-width: 60px;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .container {
@@ -857,8 +1090,15 @@
 
             <div class="build-section" id="buildSection">
                 <div class="build-title">⚡ BUILD CHAOS ⚡</div>
-                <div class="build-subtitle" id="buildSubtitle">Você DEVE usar esses itens!</div>
-                <div class="build-items" id="buildItems"></div>
+                <div class="build-subtitle" id="buildSubtitle">Você DEVE seguir essa build!</div>
+                <div class="chaos-grid">
+                    <div class="chaos-row chaos-items-box">
+                        <div class="build-items" id="buildItems"></div>
+                    </div>
+                    <div class="chaos-row" id="chaosSkillRow"></div>
+                    <div class="chaos-row" id="chaosRuneRow"></div>
+                    <div class="chaos-row" id="chaosSpellRow"></div>
+                </div>
             </div>
 
             <div class="finished-message" id="finishedMessage">
@@ -905,7 +1145,11 @@
         let chaosEnabled = false;
         let allBoots = [];
         let allCompletedItems = [];
+        let allRuneTrees = [];
+        let allSpells = [];
         let itemsLoaded = false;
+        let runesLoaded = false;
+        let spellsLoaded = false;
         const STRIP_ITEM_WIDTH = 130;
         const VISIBLE_ITEMS = 50;
 
@@ -1159,6 +1403,68 @@
             }
         }
 
+        async function fetchSpells() {
+            if (spellsLoaded) return;
+            try {
+                const response = await fetch(`https://ddragon.leagueoflegends.com/cdn/${currentVersion}/data/pt_BR/summoner.json`);
+                const data = await response.json();
+                allSpells = [];
+                for (const [key, spell] of Object.entries(data.data)) {
+                    // Only spells available on Summoner's Rift and level-appropriate (not ARAM-only etc)
+                    if (spell.modes && spell.modes.includes('CLASSIC')) {
+                        allSpells.push({
+                            id: spell.id,
+                            name: spell.name,
+                            icon: spell.image.full
+                        });
+                    }
+                }
+                spellsLoaded = true;
+            } catch (error) {
+                console.error('Erro ao carregar spells:', error);
+            }
+        }
+
+        async function fetchRunes() {
+            if (runesLoaded) return;
+            try {
+                const response = await fetch(`https://ddragon.leagueoflegends.com/cdn/${currentVersion}/data/pt_BR/runesReforged.json`);
+                allRuneTrees = await response.json();
+                runesLoaded = true;
+            } catch (error) {
+                console.error('Erro ao carregar runas:', error);
+            }
+        }
+
+        function generateRandomRunePage() {
+            // Pick primary tree
+            const primaryIdx = Math.floor(Math.random() * allRuneTrees.length);
+            const primary = allRuneTrees[primaryIdx];
+
+            // Pick secondary tree (different from primary)
+            let secondaryIdx;
+            do { secondaryIdx = Math.floor(Math.random() * allRuneTrees.length); } while (secondaryIdx === primaryIdx);
+            const secondary = allRuneTrees[secondaryIdx];
+
+            // Primary: keystone (slot 0) + one rune from each of slots 1, 2, 3
+            const keystone = primary.slots[0].runes[Math.floor(Math.random() * primary.slots[0].runes.length)];
+            const primaryRunes = [1, 2, 3].map(i => {
+                const slot = primary.slots[i];
+                return slot.runes[Math.floor(Math.random() * slot.runes.length)];
+            });
+
+            // Secondary: pick 2 different slots from 1, 2, 3 and one rune from each
+            const secSlots = [1, 2, 3];
+            shuffleArray(secSlots);
+            const pickedSlots = secSlots.slice(0, 2);
+            const secondaryRunes = pickedSlots.map(i => {
+                const slot = secondary.slots[i];
+                return slot.runes[Math.floor(Math.random() * slot.runes.length)];
+            });
+
+            return { primary, secondary, keystone, primaryRunes, secondaryRunes };
+        }
+
         function toggleChaos() {
             chaosEnabled = document.getElementById('chaosToggle').checked;
             const status = document.getElementById('chaosStatus');
@@ -1172,14 +1478,31 @@
             if (chaosEnabled && !itemsLoaded) {
                 fetchItems();
             }
+            if (chaosEnabled && !runesLoaded) {
+                fetchRunes();
+            }
+            if (chaosEnabled && !spellsLoaded) {
+                fetchSpells();
+            }
         }
 
-        function generateChaosBuild(champion) {
+        async function generateChaosBuild(champion) {
             if (!chaosEnabled || !itemsLoaded) return;
 
             const buildSection = document.getElementById('buildSection');
             const buildItems = document.getElementById('buildItems');
             buildSection.classList.add('show');
+
+            // Fetch champion spell data
+            let champSpells = [];
+            try {
+                const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${currentVersion}/data/pt_BR/champion/${champion.id}.json`);
+                const champData = await res.json();
+                const fullChamp = Object.values(champData.data)[0];
+                champSpells = fullChamp.spells.slice(0, 3); // Q, W, E (index 0,1,2)
+            } catch (e) {
+                console.error('Erro ao carregar spells do campeão:', e);
+            }
 
             // Determine if champion is melee or ranged (threshold: 325)
             const isMelee = champion.stats.attackrange <= 325;
@@ -1233,6 +1556,103 @@
             });
 
             buildItems.innerHTML = html;
+
+            // Skill priority row
+            const skillRow = document.getElementById('chaosSkillRow');
+            skillRow.classList.add('visible');
+            const skillKeys = ['Q', 'W', 'E'];
+            // Shuffle using crypto for true randomness
+            const skillOrder = [0, 1, 2];
+            const rngArray = new Uint32Array(3);
+            crypto.getRandomValues(rngArray);
+            for (let i = skillOrder.length - 1; i > 0; i--) {
+                const j = rngArray[i] % (i + 1);
+                [skillOrder[i], skillOrder[j]] = [skillOrder[j], skillOrder[i]];
+            }
+            const skillClasses = ['first', 'second', 'third'];
+            const skillLabels = ['MAX', '2nd', '3rd'];
+
+            skillRow.innerHTML = `
+                <span class="chaos-row-label">Skills</span>
+                <div class="chaos-row-content">
+                    <div class="skill-order">
+                        ${skillOrder.map((si, i) => {
+                            const spell = champSpells[si];
+                            const spellImg = spell
+                                ? `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/spell/${spell.image.full}" alt="${spell.name}" title="${spell.name}">`
+                                : '';
+                            return `
+                                <div style="text-align:center">
+                                    <div class="skill-key ${skillClasses[i]}">
+                                        ${spellImg ? `<div class="skill-spell-img">${spellImg}</div>` : ''}
+                                        <span class="skill-letter">${skillKeys[si]}</span>
+                                    </div>
+                                    <div class="skill-label">${skillLabels[i]}</div>
+                                </div>
+                                ${i < 2 ? '<span class="skill-arrow">▶</span>' : ''}
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Rune row
+            const runeRow = document.getElementById('chaosRuneRow');
+            if (runesLoaded && allRuneTrees.length > 0) {
+                runeRow.classList.add('visible');
+                const page = generateRandomRunePage();
+                const runeImg = (r, cls) => `
+                    <div class="rune-icon ${cls}" title="${r.name}">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/${r.icon}" alt="${r.name}">
+                    </div>`;
+
+                runeRow.innerHTML = `
+                    <span class="chaos-row-label">Runas</span>
+                    <div class="chaos-row-content">
+                        <div class="rune-page">
+                            <div class="rune-tree-col">
+                                <div class="rune-tree-header primary">${page.primary.name}</div>
+                                ${runeImg(page.keystone, 'keystone')}
+                                <div class="rune-keystone-name">${page.keystone.name}</div>
+                                <div class="rune-minor-row">
+                                    ${page.primaryRunes.map(r => runeImg(r, 'minor')).join('')}
+                                </div>
+                            </div>
+                            <div class="rune-divider"></div>
+                            <div class="rune-tree-col">
+                                <div class="rune-tree-header secondary">${page.secondary.name}</div>
+                                <div style="height:10px"></div>
+                                ${page.secondaryRunes.map(r => runeImg(r, 'minor')).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Spell row
+            const spellRow = document.getElementById('chaosSpellRow');
+            if (spellsLoaded && allSpells.length > 0) {
+                spellRow.classList.add('visible');
+                const shuffledSpells = [...allSpells];
+                shuffleArray(shuffledSpells);
+                const picked = shuffledSpells.slice(0, 2);
+
+                spellRow.innerHTML = `
+                    <span class="chaos-row-label">Spells</span>
+                    <div class="chaos-row-content">
+                        <div class="spells-display">
+                            ${picked.map(s => `
+                                <div class="spell-item">
+                                    <div class="spell-icon" title="${s.name}">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/spell/${s.icon}" alt="${s.name}">
+                                    </div>
+                                    <div class="spell-name">${s.name}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
         }
 
         function showError(message) {
