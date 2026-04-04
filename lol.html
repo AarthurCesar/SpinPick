@@ -1445,9 +1445,13 @@
                         restriction = 'ranged';
                     }
 
+                    const isBoot = (item.tags && item.tags.includes('Boots'))
+                        || (item.from && item.from.includes('1001'))
+                        || (item.description || '').toLowerCase().includes('mobilidade');
+
                     const itemData = { id, name: item.name, tags: item.tags || [], gold: item.gold.total, restriction };
 
-                    if (item.tags && item.tags.includes('Boots')) {
+                    if (isBoot) {
                         // Only upgraded boots (not basic boots)
                         if (item.gold.total >= 900) {
                             allBoots.push(itemData);
