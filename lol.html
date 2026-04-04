@@ -628,6 +628,55 @@
         .chaos-status.off { color: var(--text-secondary); }
         .chaos-status.on { color: #9b59b6; text-shadow: 0 0 10px rgba(155, 89, 182, 0.5); }
 
+        /* Mode Selector */
+        .mode-selector-container {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .mode-selector-container.show {
+            display: flex;
+        }
+
+        .mode-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 0;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--gold-dark);
+        }
+
+        .mode-btn {
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text-secondary);
+            border: none;
+            padding: 5px 14px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mode-btn:hover {
+            background: rgba(200, 155, 60, 0.15);
+            color: var(--gold-light);
+        }
+
+        .mode-btn.active {
+            background: var(--gold-dark);
+            color: var(--gold-light);
+        }
+
         /* Build Display */
         .build-section {
             display: none;
@@ -1088,6 +1137,16 @@
                 <span class="chaos-status off" id="chaosStatus">OFF</span>
             </div>
 
+            <div class="mode-selector-container" id="modeSelectorContainer">
+                <span class="mode-label">Modo:</span>
+                <div class="mode-buttons">
+                    <button class="mode-btn active" data-mode="CLASSIC" onclick="setGameMode('CLASSIC')">Normal</button>
+                    <button class="mode-btn" data-mode="ARAM" onclick="setGameMode('ARAM')">ARAM</button>
+                    <button class="mode-btn" data-mode="URF" onclick="setGameMode('URF')">Treta</button>
+                    <button class="mode-btn" data-mode="CHERRY" onclick="setGameMode('CHERRY')">Arena</button>
+                </div>
+            </div>
+
             <div class="build-section" id="buildSection">
                 <div class="build-title">⚡ BUILD CHAOS ⚡</div>
                 <div class="build-subtitle" id="buildSubtitle">Você DEVE seguir essa build!</div>
@@ -1150,6 +1209,7 @@
         let itemsLoaded = false;
         let runesLoaded = false;
         let spellsLoaded = false;
+        let gameMode = 'CLASSIC';
         const STRIP_ITEM_WIDTH = 130;
         const VISIBLE_ITEMS = 50;
 
@@ -1410,12 +1470,12 @@
                 const data = await response.json();
                 allSpells = [];
                 for (const [key, spell] of Object.entries(data.data)) {
-                    // Only spells available on Summoner's Rift and level-appropriate (not ARAM-only etc)
-                    if (spell.modes && spell.modes.includes('CLASSIC')) {
+                    if (spell.modes && spell.modes.length > 0) {
                         allSpells.push({
                             id: spell.id,
                             name: spell.name,
-                            icon: spell.image.full
+                            icon: spell.image.full,
+                            modes: spell.modes
                         });
                     }
                 }
@@ -1471,8 +1531,12 @@
             status.textContent = chaosEnabled ? 'ON' : 'OFF';
             status.className = 'chaos-status ' + (chaosEnabled ? 'on' : 'off');
 
+            const modeContainer = document.getElementById('modeSelectorContainer');
             if (!chaosEnabled) {
                 document.getElementById('buildSection').classList.remove('show');
+                modeContainer.classList.remove('show');
+            } else {
+                modeContainer.classList.add('show');
             }
 
             if (chaosEnabled && !itemsLoaded) {
@@ -1484,6 +1548,13 @@
             if (chaosEnabled && !spellsLoaded) {
                 fetchSpells();
             }
+        }
+
+        function setGameMode(mode) {
+            gameMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
         }
 
         async function generateChaosBuild(champion) {
@@ -1629,11 +1700,12 @@
                 `;
             }
 
-            // Spell row
+            // Spell row (filtered by game mode)
             const spellRow = document.getElementById('chaosSpellRow');
-            if (spellsLoaded && allSpells.length > 0) {
+            const modeSpells = allSpells.filter(s => s.modes.includes(gameMode));
+            if (spellsLoaded && modeSpells.length > 0) {
                 spellRow.classList.add('visible');
-                const shuffledSpells = [...allSpells];
+                const shuffledSpells = [...modeSpells];
                 shuffleArray(shuffledSpells);
                 const picked = shuffledSpells.slice(0, 2);
 
