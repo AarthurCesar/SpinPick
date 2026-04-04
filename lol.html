@@ -479,6 +479,20 @@
             background: rgba(200, 155, 60, 0.1);
         }
 
+        .champion-build-icons {
+            display: flex;
+            gap: 3px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .champion-build-icons img {
+            width: 22px;
+            height: 22px;
+            border-radius: 3px;
+            border: 1px solid rgba(155, 89, 182, 0.4);
+        }
+
         .champion-number {
             font-family: 'Cinzel', serif;
             font-size: 0.9rem;
@@ -709,7 +723,32 @@
         .build-subtitle {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .copy-build-btn {
+            background: rgba(155, 89, 182, 0.2);
+            border: 1px solid rgba(155, 89, 182, 0.5);
+            color: var(--gold-light);
+            padding: 4px 14px;
+            border-radius: 5px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+
+        .copy-build-btn:hover {
+            background: rgba(155, 89, 182, 0.4);
+            border-color: #9b59b6;
+        }
+
+        .copy-build-btn.copied {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: #2ecc71;
+            color: #2ecc71;
         }
 
         .build-items {
@@ -1150,6 +1189,7 @@
             <div class="build-section" id="buildSection">
                 <div class="build-title">⚡ BUILD CHAOS ⚡</div>
                 <div class="build-subtitle" id="buildSubtitle">Você DEVE seguir essa build!</div>
+                <button class="copy-build-btn" id="copyBuildBtn" onclick="copyBuild()">📋 Copiar Build</button>
                 <div class="chaos-grid">
                     <div class="chaos-row chaos-items-box">
                         <div class="build-items" id="buildItems"></div>
@@ -1210,14 +1250,92 @@
         let runesLoaded = false;
         let spellsLoaded = false;
         let gameMode = 'CLASSIC';
+        let championBuilds = {};
+        let currentBuildData = null;
         const STRIP_ITEM_WIDTH = 130;
         const VISIBLE_ITEMS = 50;
+
+        function saveState() {
+            const state = {
+                playedIds: playedChampions.map(c => c.id),
+                chaosEnabled,
+                gameMode,
+                builds: championBuilds
+            };
+            localStorage.setItem('lol-roulette', JSON.stringify(state));
+        }
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem('lol-roulette');
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return null;
+        }
 
         async function init() {
             try {
                 await fetchChampions();
+
+                // Restore saved state
+                const saved = loadState();
+                if (saved) {
+                    // Restore played champions
+                    if (saved.playedIds && saved.playedIds.length > 0) {
+                        const champMap = {};
+                        allChampions.forEach(c => champMap[c.id] = c);
+                        playedChampions = saved.playedIds
+                            .map(id => champMap[id])
+                            .filter(Boolean);
+                        availableChampions = allChampions.filter(
+                            c => !saved.playedIds.includes(c.id)
+                        );
+                        shuffleArray(availableChampions);
+
+                        // Show last played champion
+                        if (playedChampions.length > 0) {
+                            const last = playedChampions[0];
+                            document.getElementById('resultImage').innerHTML =
+                                `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${last.id}.png" alt="${last.name}">`;
+                            document.getElementById('resultName').textContent = last.name;
+                            document.getElementById('resultTitle').textContent = last.title;
+                        }
+
+                        if (availableChampions.length === 0) {
+                            document.getElementById('finishedMessage').classList.add('show');
+                            document.getElementById('spinBtn').disabled = true;
+                        }
+                    }
+
+                    // Restore chaos toggle
+                    if (saved.chaosEnabled) {
+                        chaosEnabled = true;
+                        document.getElementById('chaosToggle').checked = true;
+                        document.getElementById('chaosStatus').textContent = 'ON';
+                        document.getElementById('chaosStatus').className = 'chaos-status on';
+                        document.getElementById('modeSelectorContainer').classList.add('show');
+                        fetchItems();
+                        fetchRunes();
+                        fetchSpells();
+                    }
+
+                    // Restore builds
+                    if (saved.builds) {
+                        championBuilds = saved.builds;
+                    }
+
+                    // Restore game mode
+                    if (saved.gameMode) {
+                        gameMode = saved.gameMode;
+                        document.querySelectorAll('.mode-btn').forEach(btn => {
+                            btn.classList.toggle('active', btn.dataset.mode === gameMode);
+                        });
+                    }
+                }
+
                 createStrip();
                 updateStats();
+                renderChampionsList();
             } catch (error) {
                 showError('Falha ao carregar dados: ' + error.message);
             }
@@ -1309,7 +1427,7 @@
 
             winnerItem.classList.add('winner');
             showResult(winner);
-            generateChaosBuild(winner);
+            await generateChaosBuild(winner);
 
             availableChampions.shift();
             playedChampions.unshift(winner);
@@ -1324,6 +1442,7 @@
             }
 
             isSpinning = false;
+            saveState();
         }
 
         function showResult(champion) {
@@ -1362,15 +1481,24 @@
                 return;
             }
 
-            list.innerHTML = playedChampions.map((champion, index) => `
-                <div class="champion-item ${index === 0 ? 'recent' : ''}">
-                    <span class="champion-number">#${playedChampions.length - index}</span>
-                    <div class="champion-thumb">
-                        <img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${champion.id}.png" alt="${champion.name}">
+            list.innerHTML = playedChampions.map((champion, index) => {
+                const build = championBuilds[champion.id];
+                const buildHtml = build ? `
+                    <div class="champion-build-icons">
+                        ${build.map(itemId => `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/item/${itemId}.png" title="Item ${itemId}">`).join('')}
                     </div>
-                    <div class="champion-name">${champion.name}</div>
-                </div>
-            `).join('');
+                ` : '';
+                return `
+                    <div class="champion-item ${index === 0 ? 'recent' : ''}">
+                        <span class="champion-number">#${playedChampions.length - index}</span>
+                        <div class="champion-thumb">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${champion.id}.png" alt="${champion.name}">
+                        </div>
+                        <div class="champion-name">${champion.name}</div>
+                        ${buildHtml}
+                    </div>
+                `;
+            }).join('');
         }
 
         function confirmReset() {
@@ -1384,6 +1512,7 @@
             shuffleArray(allChampions);
             availableChampions = [...allChampions];
             playedChampions = [];
+            championBuilds = {};
 
             document.getElementById('resultImage').innerHTML = '<span class="result-placeholder">?</span>';
             document.getElementById('resultName').textContent = 'Clique em "Roletar"';
@@ -1395,6 +1524,7 @@
             createStrip();
             updateStats();
             renderChampionsList();
+            saveState();
         }
 
         async function fetchItems() {
@@ -1552,6 +1682,32 @@
             if (chaosEnabled && !spellsLoaded) {
                 fetchSpells();
             }
+            saveState();
+        }
+
+        function copyBuild() {
+            if (!currentBuildData) return;
+            const arsenal = {
+                title: `Chaos - ${currentBuildData.champName}`,
+                associatedMaps: [11, 12],
+                associatedChampions: [currentBuildData.champKey],
+                blocks: [{
+                    items: [
+                        { id: currentBuildData.bootId, count: 1 },
+                        ...currentBuildData.itemIds.map(id => ({ id, count: 1 }))
+                    ],
+                    type: "Build Chaos"
+                }]
+            };
+            navigator.clipboard.writeText(JSON.stringify(arsenal)).then(() => {
+                const btn = document.getElementById('copyBuildBtn');
+                btn.textContent = '✓ Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copiar Build';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
         }
 
         function setGameMode(mode) {
@@ -1559,6 +1715,7 @@
             document.querySelectorAll('.mode-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.mode === mode);
             });
+            saveState();
         }
 
         async function generateChaosBuild(champion) {
@@ -1583,12 +1740,20 @@
             const isMelee = champion.stats.attackrange <= 325;
             const champType = isMelee ? 'melee' : 'ranged';
 
-            // Filter items compatible with this champion type
+            // Items blocked per mode
+            const blockedItems = {
+                'URF': ['Anjo Guardião']
+            };
+            const blocked = blockedItems[gameMode] || [];
+
+            // Filter items compatible with this champion type and game mode
             const compatibleItems = allCompletedItems.filter(item =>
-                item.restriction === 'all' || item.restriction === champType
+                (item.restriction === 'all' || item.restriction === champType)
+                && !blocked.includes(item.name)
             );
             const compatibleBoots = allBoots.filter(item =>
-                item.restriction === 'all' || item.restriction === champType
+                (item.restriction === 'all' || item.restriction === champType)
+                && !blocked.includes(item.name)
             );
 
             // Pick 1 random boot
@@ -1598,6 +1763,16 @@
             const shuffled = [...compatibleItems];
             shuffleArray(shuffled);
             const selectedItems = shuffled.slice(0, 5);
+
+            // Save build for sidebar
+            championBuilds[champion.id] = [boot.id, ...selectedItems.map(i => i.id)];
+            // Save current build for copy (JSON arsenal format)
+            currentBuildData = {
+                champName: champion.name,
+                champKey: parseInt(champion.key),
+                bootId: boot.id,
+                itemIds: selectedItems.map(i => i.id)
+            };
 
             // Update subtitle with champion type
             document.getElementById('buildSubtitle').innerHTML =
@@ -1706,7 +1881,11 @@
 
             // Spell row (filtered by game mode)
             const spellRow = document.getElementById('chaosSpellRow');
-            const modeSpells = allSpells.filter(s => s.modes.includes(gameMode));
+            const urfBlocked = ['SummonerSmite', 'SummonerTeleport', 'SummonerExhaust'];
+            let modeSpells = allSpells.filter(s => s.modes.includes(gameMode));
+            if (gameMode === 'URF') {
+                modeSpells = modeSpells.filter(s => !urfBlocked.includes(s.id));
+            }
             if (spellsLoaded && modeSpells.length > 0) {
                 spellRow.classList.add('visible');
                 const shuffledSpells = [...modeSpells];
