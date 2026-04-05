@@ -1057,6 +1057,666 @@
             max-width: 60px;
         }
 
+        /* Team Mode Selector */
+        .team-mode-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .team-mode-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-mode-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .team-mode-btn {
+            padding: 6px 16px;
+            border: 1px solid var(--gold-dark);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .team-mode-btn:hover {
+            border-color: var(--gold);
+            color: var(--text-primary);
+        }
+
+        .team-mode-btn.active {
+            background: linear-gradient(145deg, var(--gold-dark), rgba(200, 155, 60, 0.3));
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+
+        /* Team Display */
+        .team-display {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .team-display.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .teams-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: start;
+        }
+
+        .team-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .team-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .team-header.blue {
+            background: linear-gradient(145deg, rgba(30, 80, 162, 0.4), rgba(30, 80, 162, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #60a5fa;
+        }
+
+        .team-header.red {
+            background: linear-gradient(145deg, rgba(162, 30, 30, 0.4), rgba(162, 30, 30, 0.1));
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #f87171;
+        }
+
+        .team-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease backwards;
+        }
+
+        .team-card.blue-card {
+            background: rgba(30, 80, 162, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+        }
+
+        .team-card.blue-card:hover {
+            background: rgba(30, 80, 162, 0.22);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .team-card.red-card {
+            background: rgba(162, 30, 30, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .team-card.red-card:hover {
+            background: rgba(162, 30, 30, 0.22);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .team-card:nth-child(2) { animation-delay: 0.05s; }
+        .team-card:nth-child(3) { animation-delay: 0.1s; }
+        .team-card:nth-child(4) { animation-delay: 0.15s; }
+        .team-card:nth-child(5) { animation-delay: 0.2s; }
+        .team-card:nth-child(6) { animation-delay: 0.25s; }
+
+        .team-card-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid rgba(200, 155, 60, 0.4);
+        }
+
+        .team-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .team-card-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team-card-title {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team-card-items {
+            display: flex;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .team-card-items img {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            border: 1px solid rgba(155, 89, 182, 0.3);
+        }
+
+        /* Draft Animation Overlay */
+        .draft-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 10, 19, 0.97);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .draft-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .draft-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(200, 155, 60, 0.5);
+        }
+
+        .draft-arena {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .draft-arena.single-team {
+            grid-template-columns: 1fr;
+            max-width: 400px;
+        }
+
+        .draft-team {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .draft-team-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .draft-team-header.blue {
+            background: linear-gradient(145deg, rgba(30, 80, 162, 0.4), rgba(30, 80, 162, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #60a5fa;
+        }
+
+        .draft-team-header.red {
+            background: linear-gradient(145deg, rgba(162, 30, 30, 0.4), rgba(162, 30, 30, 0.1));
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #f87171;
+        }
+
+        .draft-slot {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            min-height: 60px;
+            transition: all 0.3s ease;
+        }
+
+        .draft-slot.blue-slot {
+            background: rgba(30, 80, 162, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .draft-slot.red-slot {
+            background: rgba(162, 30, 30, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .draft-slot.rolling .draft-slot-img img {
+            animation: draftRoll 0.1s steps(1) infinite;
+        }
+
+        .draft-slot.locked {
+            transform: scale(1.02);
+        }
+
+        .draft-slot.locked.blue-slot {
+            background: rgba(30, 80, 162, 0.25);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .draft-slot.locked.red-slot {
+            background: rgba(162, 30, 30, 0.25);
+            border-color: rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+
+        @keyframes draftRoll {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .draft-slot-role {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gold);
+            background: rgba(200, 155, 60, 0.15);
+            padding: 2px 8px;
+            border-radius: 3px;
+            min-width: 70px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .draft-slot-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid rgba(200, 155, 60, 0.3);
+        }
+
+        .draft-slot-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .draft-slot-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .draft-slot-name.placeholder {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .draft-slot-spells {
+            display: flex;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .draft-slot-spells img {
+            width: 22px;
+            height: 22px;
+            border-radius: 3px;
+            border: 1px solid rgba(200, 155, 60, 0.3);
+        }
+
+        .draft-vs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .draft-vs-text {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(200, 155, 60, 0.6);
+        }
+
+        /* Solo Overlay (CS roulette on overlay) */
+        .solo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 10, 19, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .solo-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .solo-overlay-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(200, 155, 60, 0.5);
+        }
+
+        .solo-overlay-roulette {
+            position: relative;
+            width: 80%;
+            max-width: 700px;
+            overflow: hidden;
+            border: 2px solid var(--gold-dark);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .solo-overlay-roulette .selector-line-overlay {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gold);
+            box-shadow: 0 0 15px rgba(200, 155, 60, 0.8);
+            z-index: 5;
+            transform: translateX(-50%);
+        }
+
+        .solo-overlay-roulette .selector-arrow-top,
+        .solo-overlay-roulette .selector-arrow-bottom {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            z-index: 6;
+        }
+
+        .solo-overlay-roulette .selector-arrow-top {
+            top: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 14px solid var(--gold);
+        }
+
+        .solo-overlay-roulette .selector-arrow-bottom {
+            bottom: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 14px solid var(--gold);
+        }
+
+        .solo-overlay-strip {
+            display: flex;
+            will-change: transform;
+        }
+
+        .solo-overlay-strip .strip-item {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+
+        .solo-overlay-result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .solo-overlay-result.show {
+            opacity: 1;
+        }
+
+        .solo-overlay-result-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 40px rgba(200, 155, 60, 0.6);
+        }
+
+        .solo-overlay-result-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .solo-overlay-result-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 15px rgba(200, 155, 60, 0.4);
+        }
+
+        .solo-overlay-result-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .solo-overlay-roulette {
+                width: 95%;
+            }
+            .solo-overlay-strip .strip-item {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        /* Solo Draft Animation */
+        .draft-solo-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .draft-solo-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--gold-dark);
+            box-shadow: 0 0 30px rgba(200, 155, 60, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .draft-solo-img.locked {
+            border-color: var(--gold);
+            box-shadow: 0 0 60px rgba(200, 155, 60, 0.6);
+            transform: scale(1.1);
+        }
+
+        .draft-solo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .draft-solo-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 15px rgba(200, 155, 60, 0.4);
+            min-height: 2.2rem;
+        }
+
+        .draft-solo-name.placeholder {
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+        }
+
+        .draft-solo-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            min-height: 1.2rem;
+        }
+
+        .draft-solo-spells {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .draft-solo-spells img {
+            width: 36px;
+            height: 36px;
+            border-radius: 5px;
+            border: 2px solid var(--gold-dark);
+        }
+
+        .draft-solo-items {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .draft-solo-items img {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: 1px solid rgba(155, 89, 182, 0.4);
+        }
+
+        .draft-close-hint {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .draft-close-hint.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 700px) {
+            .draft-arena {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .draft-vs {
+                padding-top: 0;
+            }
+            .draft-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        .team-card-role {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gold);
+            background: rgba(200, 155, 60, 0.15);
+            padding: 2px 8px;
+            border-radius: 3px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .vs-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .vs-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(200, 155, 60, 0.5);
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .container {
@@ -1098,6 +1758,19 @@
             header h1 {
                 font-size: 1.5rem;
             }
+
+            .teams-wrapper {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .vs-divider {
+                padding-top: 0;
+            }
+
+            .vs-text {
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1123,6 +1796,28 @@
     </style>
 </head>
 <body>
+    <div class="solo-overlay" id="soloOverlay">
+        <div class="solo-overlay-title" id="soloOverlayTitle">Sorteando Campeão...</div>
+        <div class="solo-overlay-roulette">
+            <div class="selector-arrow-top"></div>
+            <div class="selector-arrow-bottom"></div>
+            <div class="selector-line-overlay"></div>
+            <div class="solo-overlay-strip" id="soloOverlayStrip"></div>
+        </div>
+        <div class="solo-overlay-result" id="soloOverlayResult">
+            <div class="solo-overlay-result-img" id="soloOverlayImg"></div>
+            <div class="solo-overlay-result-name" id="soloOverlayName"></div>
+            <div class="solo-overlay-result-title" id="soloOverlayResultTitle"></div>
+        </div>
+        <div class="draft-close-hint" id="soloCloseHint">Clique em qualquer lugar para fechar</div>
+    </div>
+
+    <div class="draft-overlay" id="draftOverlay">
+        <div class="draft-title" id="draftTitle">Sorteando Times...</div>
+        <div class="draft-arena" id="draftArena"></div>
+        <div class="draft-close-hint" id="draftCloseHint">Clique em qualquer lugar para fechar</div>
+    </div>
+
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-spinner"></div>
         <div class="loading-text">Carregando Campeões...</div>
@@ -1159,9 +1854,34 @@
                 <div class="result-title" id="resultTitle">Para descobrir seu campeão</div>
             </div>
 
+            <div class="team-mode-container">
+                <span class="team-mode-label">Modo:</span>
+                <div class="team-mode-buttons">
+                    <button class="team-mode-btn active" data-team="solo" onclick="setTeamMode('solo')">Solo</button>
+                    <button class="team-mode-btn" data-team="team5" onclick="setTeamMode('team5')">Time (5)</button>
+                    <button class="team-mode-btn" data-team="team10" onclick="setTeamMode('team10')">5v5 (10)</button>
+                </div>
+            </div>
+
+            <div class="chaos-toggle-container" id="fearlessContainer">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="fearlessToggle" onchange="toggleFearless()">
+                    <span class="toggle-slider"></span>
+                </label>
+                <div>
+                    <span class="chaos-label">Fearless Draft</span>
+                    <span class="chaos-sublabel">Campeões usados saem do pool</span>
+                </div>
+                <span class="chaos-status off" id="fearlessStatus">OFF</span>
+            </div>
+
             <div class="button-group">
                 <button class="btn btn-primary" id="spinBtn" onclick="spin()">Roletar</button>
                 <button class="btn btn-secondary" id="resetBtn" onclick="confirmReset()">Resetar</button>
+            </div>
+
+            <div class="team-display" id="teamDisplay">
+                <div class="teams-wrapper" id="teamsWrapper"></div>
             </div>
 
             <div class="chaos-toggle-container">
@@ -1251,7 +1971,21 @@
         let spellsLoaded = false;
         let gameMode = 'CLASSIC';
         let championBuilds = {};
+        let championSpells = {}; // { champId: [{id, name, icon}, {id, name, icon}] }
         let currentBuildData = null;
+        let teamMode = 'solo'; // 'solo', 'team5', 'team10'
+        let fearlessDraft = false;
+
+        // Champion role pools based on op.gg meta data (DDragon champion IDs)
+        const CHAMPION_ROLE_MAP = {
+            Top: ['Aatrox','Akali','Ambessa','Aurora','Camille','Cassiopeia','Chogath','Darius','DrMundo','Fiora','Gangplank','Garen','Gnar','Gragas','Gwen','Heimerdinger','Illaoi','Irelia','Jax','Jayce','KSante','Kayle','Kennen','Kled','Malphite','Mordekaiser','Nasus','Olaf','Ornn','Pantheon','Poppy','Quinn','Renekton','Rengar','Riven','Rumble','Sett','Shen','Singed','Sion','TahmKench','Teemo','Trundle','Tryndamere','Udyr','Urgot','Vayne','Vladimir','Volibear','Warwick','MonkeyKing','Yasuo','Yone','Yorick','Zac'],
+            Jungle: ['Amumu','Belveth','Brand','Briar','Diana','DrMundo','Ekko','Elise','Evelynn','Fiddlesticks','Gragas','Graves','Hecarim','Ivern','JarvanIV','Jax','Karthus','Kayn','Khazix','Kindred','LeeSin','Lillia','Maokai','MasterYi','Naafiri','Nidalee','Nocturne','Nunu','Olaf','Poppy','Qiyana','Rammus','RekSai','Rengar','Sejuani','Sett','Shaco','Shyvana','Skarner','Taliyah','Talon','Trundle','Udyr','Vi','Viego','Volibear','Warwick','MonkeyKing','XinZhao','Zac'],
+            Mid: ['Ahri','Akali','Akshan','Anivia','Annie','AurelionSol','Aurora','Azir','Cassiopeia','Corki','Diana','Ekko','Fizz','Galio','Heimerdinger','Hwei','Irelia','Jayce','Karma','Kassadin','Katarina','Leblanc','Lissandra','Lucian','Lux','Malzahar','Mel','Morgana','Naafiri','Neeko','Orianna','Pantheon','Qiyana','Rumble','Ryze','Seraphine','Smolder','Swain','Sylas','Syndra','Taliyah','Talon','Tristana','TwistedFate','Veigar','Vex','Viktor','Vladimir','Xerath','Yasuo','Yone','Zed','Ziggs','Zilean','Zoe'],
+            ADC: ['Aphelios','Ashe','Caitlyn','Corki','Draven','Ezreal','Jhin','Jinx','Kaisa','Kalista','KogMaw','Lucian','MissFortune','Nilah','Samira','Senna','Sivir','Smolder','Tristana','Twitch','Varus','Vayne','Xayah','Zeri','Ziggs'],
+            Sup: ['Alistar','Amumu','Annie','Ashe','Bard','Blitzcrank','Braum','Galio','Heimerdinger','Hwei','Janna','Karma','Leona','Lulu','Lux','Malphite','Maokai','Milio','Morgana','Nami','Nautilus','Neeko','Pantheon','Poppy','Pyke','Rakan','Rell','Renata','Senna','Seraphine','Sett','Shaco','Shen','Sona','Soraka','Swain','TahmKench','Taric','Thresh','Xerath','Yuumi','Zilean','Zyra']
+        };
+        const ROLE_ORDER = ['ADC', 'Sup', 'Mid', 'Top', 'Jungle'];
+        const ROLE_ICONS = { Top: '🗡️', Jungle: '🌿', Mid: '✨', ADC: '🏹', Sup: '🛡️' };
         const STRIP_ITEM_WIDTH = 130;
         const VISIBLE_ITEMS = 50;
 
@@ -1260,6 +1994,8 @@
                 playedIds: playedChampions.map(c => c.id),
                 chaosEnabled,
                 gameMode,
+                teamMode,
+                fearlessDraft,
                 builds: championBuilds
             };
             localStorage.setItem('lol-roulette', JSON.stringify(state));
@@ -1331,6 +2067,22 @@
                             btn.classList.toggle('active', btn.dataset.mode === gameMode);
                         });
                     }
+
+                    // Restore team mode
+                    if (saved.teamMode) {
+                        teamMode = saved.teamMode;
+                        document.querySelectorAll('.team-mode-btn').forEach(btn => {
+                            btn.classList.toggle('active', btn.dataset.team === teamMode);
+                        });
+                    }
+
+                    // Restore fearless draft
+                    if (saved.fearlessDraft) {
+                        fearlessDraft = true;
+                        document.getElementById('fearlessToggle').checked = true;
+                        document.getElementById('fearlessStatus').textContent = 'ON';
+                        document.getElementById('fearlessStatus').className = 'chaos-status on';
+                    }
                 }
 
                 createStrip();
@@ -1387,57 +2139,133 @@
         async function spin() {
             if (isSpinning || availableChampions.length === 0) return;
 
+            // Team modes - skip roulette animation
+            if (teamMode === 'team5') {
+                await generateTeams(5);
+                return;
+            }
+            if (teamMode === 'team10') {
+                await generateTeams(10);
+                return;
+            }
+
+            // Solo mode: CS-style roulette synced (page + overlay)
             isSpinning = true;
             const spinBtn = document.getElementById('spinBtn');
             spinBtn.disabled = true;
             document.getElementById('finishedMessage').classList.remove('show');
+            document.getElementById('teamDisplay').classList.remove('show');
 
             const winner = availableChampions[0];
-            const container = document.getElementById('stripContainer');
             const winnerPosition = VISIBLE_ITEMS - 8;
 
+            // Pre-generate same random champions for both strips
+            const stripChamps = [];
+            for (let i = 0; i < VISIBLE_ITEMS; i++) {
+                stripChamps.push(i === winnerPosition ? winner : allChampions[Math.floor(Math.random() * allChampions.length)]);
+            }
+
+            // --- Build ORIGINAL strip (background page) ---
+            const container = document.getElementById('stripContainer');
             container.innerHTML = '';
-
-            for (let i = 0; i < winnerPosition; i++) {
-                const randomChamp = allChampions[Math.floor(Math.random() * allChampions.length)];
-                const item = createStripItem(randomChamp, i);
+            for (let i = 0; i < VISIBLE_ITEMS; i++) {
+                const item = createStripItem(stripChamps[i], i);
                 container.appendChild(item);
             }
 
-            const winnerItem = createStripItem(winner, winnerPosition);
-            container.appendChild(winnerItem);
+            // --- Build OVERLAY strip (same champions) ---
+            const overlay = document.getElementById('soloOverlay');
+            const strip = document.getElementById('soloOverlayStrip');
+            const resultEl = document.getElementById('soloOverlayResult');
+            const titleEl = document.getElementById('soloOverlayTitle');
+            const hintEl = document.getElementById('soloCloseHint');
 
-            for (let i = winnerPosition + 1; i < VISIBLE_ITEMS; i++) {
-                const randomChamp = allChampions[Math.floor(Math.random() * allChampions.length)];
-                const item = createStripItem(randomChamp, i);
-                container.appendChild(item);
+            titleEl.textContent = 'Sorteando Campeão...';
+            resultEl.classList.remove('show');
+            hintEl.classList.remove('show');
+
+            strip.innerHTML = '';
+            for (let i = 0; i < VISIBLE_ITEMS; i++) {
+                const div = document.createElement('div');
+                div.className = 'strip-item';
+                div.innerHTML = `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${stripChamps[i].id}.png" alt="${stripChamps[i].name}">`;
+                strip.appendChild(div);
             }
 
-            const itemCenterOffset = (STRIP_ITEM_WIDTH / 2);
-            const finalPosition = -(winnerPosition * STRIP_ITEM_WIDTH) - itemCenterOffset;
-
+            // Show overlay and wait for render
+            overlay.classList.add('show');
+            strip.style.transition = 'none';
+            strip.style.transform = 'translateX(0)';
             container.style.transition = 'none';
             container.style.transform = 'translateX(0)';
-            container.offsetHeight;
+
+            // Wait for render so real dimensions are available
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+            // Measure REAL item total width (including margin)
+            const ovItem = strip.children[0];
+            const ovStyle = getComputedStyle(ovItem);
+            const ovItemW = ovItem.offsetWidth + parseFloat(ovStyle.marginLeft) + parseFloat(ovStyle.marginRight);
+            const rouletteEl = document.querySelector('.solo-overlay-roulette');
+            const rouletteWidth = rouletteEl.offsetWidth;
+
+            // Background strip: container has CSS left:50%, so formula is -(pos*w)-(w/2)
+            // STRIP_ITEM_WIDTH=130 = 120px width + 3px border*2 + 5px margin*2 = 130 (approximate)
+            const finalPosition = -(winnerPosition * STRIP_ITEM_WIDTH) - (STRIP_ITEM_WIDTH / 2);
+
+            // Overlay strip: starts at left:0, selector at center
+            const overlayFinalPos = -(winnerPosition * ovItemW) - (ovItemW / 2) + (rouletteWidth / 2);
 
             container.style.transition = 'transform 4s cubic-bezier(0.1, 0.7, 0.1, 1)';
             container.style.transform = `translateX(${finalPosition}px)`;
+            strip.style.transition = 'transform 4s cubic-bezier(0.1, 0.7, 0.1, 1)';
+            strip.style.transform = `translateX(${overlayFinalPos}px)`;
 
-            await new Promise(resolve => setTimeout(resolve, 4000));
+            await new Promise(r => setTimeout(r, 4200));
 
-            winnerItem.classList.add('winner');
+            // Mark winner on background strip
+            const bgWinner = document.getElementById(`strip-item-${winnerPosition}`);
+            if (bgWinner) bgWinner.classList.add('winner');
+
+            // Show result below roulette in overlay
+            titleEl.textContent = 'Campeão Sorteado!';
+            document.getElementById('soloOverlayImg').innerHTML =
+                `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${winner.id}.png" alt="${winner.name}">`;
+            document.getElementById('soloOverlayName').textContent = winner.name;
+            document.getElementById('soloOverlayResultTitle').textContent = winner.title;
+            resultEl.classList.add('show');
+
+            // Also update main page result
             showResult(winner);
             await generateChaosBuild(winner);
 
-            availableChampions.shift();
-            playedChampions.unshift(winner);
+            // Auto-close after 3s or click (whichever first)
+            await new Promise(resolve => {
+                let closed = false;
+                function close() {
+                    if (closed) return;
+                    closed = true;
+                    overlay.removeEventListener('click', close);
+                    overlay.classList.remove('show');
+                    resolve();
+                }
+                overlay.addEventListener('click', close);
+                setTimeout(close, 3000);
+            });
 
-            updateStats();
-            renderChampionsList();
+            if (fearlessDraft) {
+                availableChampions.shift();
+                playedChampions.unshift(winner);
+                updateStats();
+                renderChampionsList();
 
-            if (availableChampions.length === 0) {
-                document.getElementById('finishedMessage').classList.add('show');
+                if (availableChampions.length === 0) {
+                    document.getElementById('finishedMessage').classList.add('show');
+                } else {
+                    spinBtn.disabled = false;
+                }
             } else {
+                shuffleArray(availableChampions);
                 spinBtn.disabled = false;
             }
 
@@ -1519,6 +2347,7 @@
             document.getElementById('resultTitle').textContent = 'Para descobrir seu campeão';
             document.getElementById('finishedMessage').classList.remove('show');
             document.getElementById('buildSection').classList.remove('show');
+            document.getElementById('teamDisplay').classList.remove('show');
             document.getElementById('spinBtn').disabled = false;
 
             createStrip();
@@ -1716,6 +2545,453 @@
                 btn.classList.toggle('active', btn.dataset.mode === mode);
             });
             saveState();
+        }
+
+        function setTeamMode(mode) {
+            teamMode = mode;
+            document.querySelectorAll('.team-mode-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.team === mode);
+            });
+            // Hide team display when switching modes
+            document.getElementById('teamDisplay').classList.remove('show');
+            saveState();
+        }
+
+        function toggleFearless() {
+            fearlessDraft = document.getElementById('fearlessToggle').checked;
+            const status = document.getElementById('fearlessStatus');
+            status.textContent = fearlessDraft ? 'ON' : 'OFF';
+            status.className = 'chaos-status ' + (fearlessDraft ? 'on' : 'off');
+            saveState();
+        }
+
+        function pickTeamByRole(pool) {
+            const used = new Set();
+            const team = []; // [{champion, role}]
+
+            // Pick in order: ADC, Sup first (most restrictive), then Mid, Top, Jungle
+            for (const role of ROLE_ORDER) {
+                const rolePool = CHAMPION_ROLE_MAP[role] || [];
+                // Find candidates that exist in this role's pool AND are available
+                let candidates = pool.filter(c =>
+                    !used.has(c.id) && rolePool.includes(c.id)
+                );
+                if (candidates.length === 0) {
+                    // Fallback: any unused champion
+                    candidates = pool.filter(c => !used.has(c.id));
+                }
+                if (candidates.length === 0) break;
+                const pick = candidates[Math.floor(Math.random() * candidates.length)];
+                used.add(pick.id);
+                team.push({ champion: pick, role });
+            }
+
+            // Sort for display: Top, Jg, Mid, ADC, Sup
+            const displayOrder = ['Top', 'Jungle', 'Mid', 'ADC', 'Sup'];
+            team.sort((a, b) => displayOrder.indexOf(a.role) - displayOrder.indexOf(b.role));
+            return team;
+        }
+
+        function pickSpellsForRole(role) {
+            const smite = allSpells.find(s => s.id === 'SummonerSmite');
+            const urfBlocked = ['SummonerSmite', 'SummonerTeleport', 'SummonerExhaust'];
+
+            // All spells available for this game mode, excluding Smite for non-junglers
+            let pool = allSpells.filter(s =>
+                s.id !== 'SummonerSmite' && s.modes.includes(gameMode)
+            );
+            if (gameMode === 'URF') {
+                pool = pool.filter(s => !urfBlocked.includes(s.id));
+            }
+
+            if (role === 'Jungle' && smite) {
+                // Smite fixed + 1 random
+                const shuffled = [...pool];
+                shuffleArray(shuffled);
+                return [smite, shuffled[0]].filter(Boolean);
+            }
+
+            // 2 random spells (no duplicates)
+            const shuffled = [...pool];
+            shuffleArray(shuffled);
+            return shuffled.slice(0, 2);
+        }
+
+        async function generateTeams(count) {
+            if (availableChampions.length < count) {
+                alert(`Não há campeões suficientes! Restam apenas ${availableChampions.length}.`);
+                return;
+            }
+
+            isSpinning = true;
+            document.getElementById('spinBtn').disabled = true;
+
+            if (!spellsLoaded) await fetchSpells();
+
+            // Pick teams by role (temporarily remove picked from pool to avoid duplicates within same draft)
+            const team1 = pickTeamByRole(availableChampions);
+            const team1Ids = new Set(team1.map(t => t.champion.id));
+            const tempPool = availableChampions.filter(c => !team1Ids.has(c.id));
+
+            let team2 = [];
+            if (count === 10) {
+                team2 = pickTeamByRole(tempPool);
+            }
+
+            const allPicked = [...team1, ...team2];
+            const allPickedIds = new Set(allPicked.map(e => e.champion.id));
+
+            // Fearless ON: remove from pool permanently. OFF: keep them available.
+            if (fearlessDraft) {
+                availableChampions = availableChampions.filter(c => !allPickedIds.has(c.id));
+            }
+
+            for (const entry of allPicked) {
+                if (chaosEnabled && itemsLoaded) {
+                    await generateChaosBuildSilent(entry.champion);
+                }
+                if (spellsLoaded) {
+                    championSpells[entry.champion.id] = pickSpellsForRole(entry.role);
+                }
+            }
+
+            if (fearlessDraft) {
+                playedChampions.unshift(...allPicked.map(e => e.champion));
+            }
+
+            // Run draft animation
+            await runDraftAnimation(team1, team2, count);
+
+            // After animation, render final static teams
+            renderFinalTeams(team1, team2, count);
+
+            if (fearlessDraft) {
+                updateStats();
+                renderChampionsList();
+                if (availableChampions.length === 0) {
+                    document.getElementById('finishedMessage').classList.add('show');
+                }
+            }
+
+            document.getElementById('spinBtn').disabled = false;
+            isSpinning = false;
+            saveState();
+        }
+
+        async function runSoloDraftAnimation(champion) {
+            const overlay = document.getElementById('draftOverlay');
+            const arena = document.getElementById('draftArena');
+            const title = document.getElementById('draftTitle');
+            const hint = document.getElementById('draftCloseHint');
+
+            title.textContent = 'Sorteando Campeão...';
+            hint.classList.remove('show');
+            arena.className = 'draft-arena single-team';
+
+            arena.innerHTML = `
+                <div class="draft-solo-card">
+                    <div class="draft-solo-img" id="draftSoloImg">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${allChampions[0].id}.png" alt="?">
+                    </div>
+                    <div class="draft-solo-name placeholder" id="draftSoloName">???</div>
+                    <div class="draft-solo-title" id="draftSoloTitle"></div>
+                    <div class="draft-solo-spells" id="draftSoloSpells"></div>
+                    <div class="draft-solo-items" id="draftSoloItems"></div>
+                </div>
+            `;
+
+            overlay.classList.add('show');
+
+            const imgEl = document.querySelector('#draftSoloImg img');
+            const nameEl = document.getElementById('draftSoloName');
+            const titleEl = document.getElementById('draftSoloTitle');
+
+            // Rolling animation
+            const interval = setInterval(() => {
+                const rand = allChampions[Math.floor(Math.random() * allChampions.length)];
+                imgEl.src = `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${rand.id}.png`;
+                nameEl.textContent = rand.name;
+            }, 80);
+
+            // Roll for 2 seconds then slow down
+            await new Promise(r => setTimeout(r, 1500));
+
+            // Slow down phase
+            clearInterval(interval);
+            let delay = 100;
+            for (let i = 0; i < 8; i++) {
+                const rand = allChampions[Math.floor(Math.random() * allChampions.length)];
+                imgEl.src = `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${rand.id}.png`;
+                nameEl.textContent = rand.name;
+                delay += 40;
+                await new Promise(r => setTimeout(r, delay));
+            }
+
+            // Lock in winner
+            imgEl.src = `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${champion.id}.png`;
+            nameEl.textContent = champion.name;
+            nameEl.classList.remove('placeholder');
+            titleEl.textContent = champion.title;
+            document.getElementById('draftSoloImg').classList.add('locked');
+            title.textContent = 'Campeão Sorteado!';
+
+            // Show build/spells if available
+            const build = championBuilds[champion.id];
+            const spells = championSpells[champion.id];
+            if (spells && spells.length > 0) {
+                document.getElementById('draftSoloSpells').innerHTML = spells.map(s =>
+                    `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/spell/${s.icon}" title="${s.name}">`
+                ).join('');
+            }
+            if (build && build.length > 0) {
+                document.getElementById('draftSoloItems').innerHTML = build.map(id =>
+                    `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/item/${id}.png" title="Item ${id}">`
+                ).join('');
+            }
+
+            // Auto-close after 3s or click (whichever first)
+            await new Promise(resolve => {
+                let closed = false;
+                function close() {
+                    if (closed) return;
+                    closed = true;
+                    overlay.removeEventListener('click', close);
+                    overlay.classList.remove('show');
+                    resolve();
+                }
+                overlay.addEventListener('click', close);
+                setTimeout(close, 3000);
+            });
+
+            await new Promise(r => setTimeout(r, 300));
+        }
+
+        async function runDraftAnimation(team1, team2, count) {
+            const overlay = document.getElementById('draftOverlay');
+            const arena = document.getElementById('draftArena');
+            const title = document.getElementById('draftTitle');
+            const hint = document.getElementById('draftCloseHint');
+
+            title.textContent = count === 5 ? 'Sorteando Time...' : 'Sorteando Times...';
+            hint.classList.remove('show');
+
+            const isSingle = count === 5;
+            arena.className = 'draft-arena' + (isSingle ? ' single-team' : '');
+
+            const displayOrder = ['Top', 'Jungle', 'Mid', 'ADC', 'Sup'];
+
+            // Build slot HTML
+            function buildTeamSlots(team, slotClass, headerClass, headerText) {
+                return `
+                    <div class="draft-team">
+                        <div class="draft-team-header ${headerClass}">${headerText}</div>
+                        ${displayOrder.map((role, i) => `
+                            <div class="draft-slot ${slotClass}" id="draft-${slotClass}-${i}">
+                                <span class="draft-slot-role">${ROLE_ICONS[role]} ${role}</span>
+                                <div class="draft-slot-img">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${allChampions[0].id}.png" alt="?">
+                                </div>
+                                <span class="draft-slot-name placeholder">???</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            if (isSingle) {
+                arena.innerHTML = buildTeamSlots(team1, 'blue-slot', 'blue', 'Seu Time');
+            } else {
+                arena.innerHTML =
+                    buildTeamSlots(team1, 'blue-slot', 'blue', 'Time Azul') +
+                    `<div class="draft-vs"><span class="draft-vs-text">VS</span></div>` +
+                    buildTeamSlots(team2, 'red-slot', 'red', 'Time Vermelho');
+            }
+
+            overlay.classList.add('show');
+
+            // Rolling animation - cycle random champion images
+            const allSlots = [];
+            for (let i = 0; i < 5; i++) {
+                allSlots.push({ el: document.getElementById(`draft-blue-slot-${i}`), entry: team1[i] });
+            }
+            if (!isSingle) {
+                for (let i = 0; i < 5; i++) {
+                    allSlots.push({ el: document.getElementById(`draft-red-slot-${i}`), entry: team2[i] });
+                }
+            }
+
+            // Start all slots rolling
+            const rollIntervals = [];
+            for (const slot of allSlots) {
+                slot.el.classList.add('rolling');
+                const interval = setInterval(() => {
+                    const rand = allChampions[Math.floor(Math.random() * allChampions.length)];
+                    slot.el.querySelector('.draft-slot-img img').src =
+                        `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${rand.id}.png`;
+                    slot.el.querySelector('.draft-slot-name').textContent = rand.name;
+                }, 80);
+                rollIntervals.push(interval);
+            }
+
+            // Lock in one by one with delay
+            await new Promise(r => setTimeout(r, 800));
+
+            for (let i = 0; i < allSlots.length; i++) {
+                clearInterval(rollIntervals[i]);
+                const slot = allSlots[i];
+                const champ = slot.entry.champion;
+                const spells = championSpells[champ.id];
+
+                slot.el.classList.remove('rolling');
+                slot.el.classList.add('locked');
+                slot.el.querySelector('.draft-slot-img img').src =
+                    `https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${champ.id}.png`;
+
+                const nameEl = slot.el.querySelector('.draft-slot-name');
+                nameEl.textContent = champ.name;
+                nameEl.classList.remove('placeholder');
+
+                // Add spells
+                if (spells && spells.length > 0) {
+                    const spellsDiv = document.createElement('div');
+                    spellsDiv.className = 'draft-slot-spells';
+                    spellsDiv.innerHTML = spells.map(s =>
+                        `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/spell/${s.icon}" title="${s.name}">`
+                    ).join('');
+                    slot.el.appendChild(spellsDiv);
+                }
+
+                await new Promise(r => setTimeout(r, 400));
+            }
+
+            // Auto-close after 3s or click (whichever first)
+            await new Promise(resolve => {
+                let closed = false;
+                function close() {
+                    if (closed) return;
+                    closed = true;
+                    overlay.removeEventListener('click', close);
+                    overlay.classList.remove('show');
+                    resolve();
+                }
+                overlay.addEventListener('click', close);
+                setTimeout(close, 3000);
+            });
+
+            await new Promise(r => setTimeout(r, 400));
+        }
+
+        function renderFinalTeams(team1, team2, count) {
+            const wrapper = document.getElementById('teamsWrapper');
+            const teamDisplay = document.getElementById('teamDisplay');
+
+            if (count === 5) {
+                wrapper.innerHTML = `
+                    <div class="team-column" style="grid-column: 1 / -1; max-width: 500px; margin: 0 auto; width: 100%;">
+                        <div class="team-header blue">Seu Time</div>
+                        ${team1.map((e, i) => renderTeamCard(e.champion, 'blue-card', i, e.role)).join('')}
+                    </div>
+                `;
+            } else {
+                wrapper.innerHTML = `
+                    <div class="team-column">
+                        <div class="team-header blue">Time Azul</div>
+                        ${team1.map((e, i) => renderTeamCard(e.champion, 'blue-card', i, e.role)).join('')}
+                    </div>
+                    <div class="vs-divider">
+                        <span class="vs-text">VS</span>
+                    </div>
+                    <div class="team-column">
+                        <div class="team-header red">Time Vermelho</div>
+                        ${team2.map((e, i) => renderTeamCard(e.champion, 'red-card', i, e.role)).join('')}
+                    </div>
+                `;
+            }
+
+            teamDisplay.classList.add('show');
+            document.getElementById('resultImage').innerHTML = '<span class="result-placeholder">?</span>';
+            document.getElementById('resultName').textContent = 'Times sorteados!';
+            document.getElementById('resultTitle').textContent = `${count} campeões distribuídos por role`;
+            document.getElementById('buildSection').classList.remove('show');
+        }
+
+        function renderTeamCard(champion, cardClass, index, role) {
+            const build = championBuilds[champion.id];
+            const spells = championSpells[champion.id];
+            const buildHtml = build ? `
+                <div class="team-card-items">
+                    ${build.map(itemId => `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/item/${itemId}.png" title="Item ${itemId}">`).join('')}
+                </div>
+            ` : '';
+            const spellsHtml = spells && spells.length > 0 ? `
+                <div class="team-card-items">
+                    ${spells.map(s => `<img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/spell/${s.icon}" title="${s.name}" style="border-color: rgba(200, 155, 60, 0.4);">`).join('')}
+                </div>
+            ` : '';
+            const roleLabel = role ? `<span class="team-card-role">${ROLE_ICONS[role]} ${role}</span>` : '';
+            return `
+                <div class="team-card ${cardClass}" style="animation-delay: ${index * 0.08}s">
+                    ${roleLabel}
+                    <div class="team-card-img">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/${currentVersion}/img/champion/${champion.id}.png" alt="${champion.name}">
+                    </div>
+                    <div class="team-card-info">
+                        <div class="team-card-name">${champion.name}</div>
+                        <div class="team-card-title">${champion.title}</div>
+                    </div>
+                    ${spellsHtml}
+                    ${buildHtml}
+                </div>
+            `;
+        }
+
+        async function generateChaosBuildSilent(champion) {
+            if (!chaosEnabled || !itemsLoaded) return;
+
+            const isMelee = champion.stats.attackrange <= 325;
+            const champType = isMelee ? 'melee' : 'ranged';
+
+            const blockedItems = { 'URF': ['Anjo Guardião', 'Quebra-Casco'] };
+            const blocked = blockedItems[gameMode] || [];
+
+            const compatibleItems = allCompletedItems.filter(item =>
+                (item.restriction === 'all' || item.restriction === champType)
+                && !blocked.includes(item.name)
+            );
+            const compatibleBoots = allBoots.filter(item =>
+                (item.restriction === 'all' || item.restriction === champType)
+                && !blocked.includes(item.name)
+            );
+
+            const boot = compatibleBoots[Math.floor(Math.random() * compatibleBoots.length)];
+
+            const exclusiveComponents = ['3077', '3035', '3070'];
+            const exclusivePassiveGroups = [['3156', '3053']];
+
+            function getExclusiveKeys(item) {
+                const keys = [];
+                for (const comp of exclusiveComponents) {
+                    if (item.from.includes(comp)) keys.push('comp_' + comp);
+                }
+                for (let g = 0; g < exclusivePassiveGroups.length; g++) {
+                    if (exclusivePassiveGroups[g].includes(String(item.id))) keys.push('passive_' + g);
+                }
+                return keys;
+            }
+
+            const shuffled = [...compatibleItems];
+            shuffleArray(shuffled);
+            const selectedItems = [];
+            const usedExclusiveKeys = new Set();
+            for (const item of shuffled) {
+                if (selectedItems.length >= 5) break;
+                const keys = getExclusiveKeys(item);
+                if (keys.some(k => usedExclusiveKeys.has(k))) continue;
+                selectedItems.push(item);
+                keys.forEach(k => usedExclusiveKeys.add(k));
+            }
+
+            championBuilds[champion.id] = [boot.id, ...selectedItems.map(i => i.id)];
         }
 
         async function generateChaosBuild(champion) {
