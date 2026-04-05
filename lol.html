@@ -1579,7 +1579,7 @@
                         || (item.from && item.from.includes('1001'))
                         || (item.description || '').toLowerCase().includes('mobilidade');
 
-                    const itemData = { id, name: item.name, tags: item.tags || [], gold: item.gold.total, restriction };
+                    const itemData = { id, name: item.name, tags: item.tags || [], gold: item.gold.total, restriction, from: item.from || [] };
 
                     if (isBoot) {
                         // Only upgraded boots (not basic boots)
@@ -1742,7 +1742,7 @@
 
             // Items blocked per mode
             const blockedItems = {
-                'URF': ['Anjo Guardião']
+                'URF': ['Anjo Guardião', 'Quebra-Casco']
             };
             const blocked = blockedItems[gameMode] || [];
 
@@ -1759,10 +1759,37 @@
             // Pick 1 random boot
             const boot = compatibleBoots[Math.floor(Math.random() * compatibleBoots.length)];
 
-            // Pick 5 random unique completed items
+            // Exclusive item groups - items that can't be built together in-game
+            // Component-based: items building from same exclusive component
+            const exclusiveComponents = ['3077', '3035', '3070']; // Tiamat(Hydras), Last Whisper, Tear
+            // Passive-based: items sharing unique passives (by item ID)
+            const exclusivePassiveGroups = [
+                ['3156', '3053'], // Maw of Malmortius + Sterak's Gage (Lifeline)
+            ];
+
+            function getExclusiveKeys(item) {
+                const keys = [];
+                for (const comp of exclusiveComponents) {
+                    if (item.from.includes(comp)) keys.push('comp_' + comp);
+                }
+                for (let g = 0; g < exclusivePassiveGroups.length; g++) {
+                    if (exclusivePassiveGroups[g].includes(String(item.id))) keys.push('passive_' + g);
+                }
+                return keys;
+            }
+
+            // Pick 5 random unique completed items (respecting exclusive groups)
             const shuffled = [...compatibleItems];
             shuffleArray(shuffled);
-            const selectedItems = shuffled.slice(0, 5);
+            const selectedItems = [];
+            const usedExclusiveKeys = new Set();
+            for (const item of shuffled) {
+                if (selectedItems.length >= 5) break;
+                const keys = getExclusiveKeys(item);
+                if (keys.some(k => usedExclusiveKeys.has(k))) continue;
+                selectedItems.push(item);
+                keys.forEach(k => usedExclusiveKeys.add(k));
+            }
 
             // Save build for sidebar
             championBuilds[champion.id] = [boot.id, ...selectedItems.map(i => i.id)];
