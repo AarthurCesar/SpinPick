@@ -326,7 +326,8 @@
         .button-group {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 15px;
+            margin-bottom: 5px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -377,8 +378,8 @@
             display: flex;
             justify-content: center;
             gap: 40px;
-            margin-top: 30px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 12px 20px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             border: 1px solid var(--gold-dark);
@@ -556,6 +557,61 @@
         }
 
         /* Chaos AI Toggle */
+        /* Settings Panel */
+        .settings-panel {
+            width: 100%;
+            max-width: 700px;
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--gold-dark);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .settings-panel .divider-line {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
+            margin: 8px 0;
+        }
+
+        .settings-panel .chaos-toggle-container {
+            margin-top: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 10px 0;
+        }
+
+        .settings-panel .team-mode-container {
+            margin-top: 0;
+        }
+
+        .settings-panel .mode-selector-container {
+            padding-left: 75px;
+            margin-top: 4px;
+        }
+
+        /* Fearless toggle gold style */
+        .settings-panel #fearlessContainer .chaos-status.on {
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(200, 155, 60, 0.5);
+        }
+
+        #fearlessContainer .toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(145deg, #2e1a00, #694b1b);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(200, 155, 60, 0.5);
+        }
+
+        #fearlessContainer .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(30px);
+            background: var(--gold);
+            box-shadow: 0 0 10px rgba(200, 155, 60, 0.8);
+        }
+
         .chaos-toggle-container {
             display: flex;
             align-items: center;
@@ -1063,7 +1119,7 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-top: 15px;
+            padding: 6px 0;
         }
 
         .team-mode-label {
@@ -1771,6 +1827,20 @@
             .vs-text {
                 font-size: 1.3rem;
             }
+
+            .settings-panel {
+                max-width: 100%;
+                padding: 12px 14px;
+            }
+
+            .settings-panel .mode-selector-container {
+                padding-left: 40px;
+            }
+
+            .settings-panel .team-mode-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1791,6 +1861,23 @@
             .stats-bar {
                 gap: 20px;
                 flex-wrap: wrap;
+            }
+
+            .settings-panel {
+                padding: 10px;
+            }
+
+            .settings-panel .mode-selector-container {
+                padding-left: 0;
+            }
+
+            .settings-panel .chaos-toggle-container {
+                padding: 6px 0;
+            }
+
+            .settings-panel .team-mode-container .mode-btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1837,6 +1924,21 @@
 
     <div class="container">
         <div class="roulette-section">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value" id="remainingCount">0</div>
+                    <div class="stat-label">Restantes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="playedCount">0</div>
+                    <div class="stat-label">Jogados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+            </div>
+
             <div class="case-container">
                 <div class="selector-triangle-top"></div>
                 <div class="selector-triangle-bottom"></div>
@@ -1854,56 +1956,57 @@
                 <div class="result-title" id="resultTitle">Para descobrir seu campeão</div>
             </div>
 
-            <div class="team-mode-container">
-                <span class="team-mode-label">Modo:</span>
-                <div class="team-mode-buttons">
-                    <button class="team-mode-btn active" data-team="solo" onclick="setTeamMode('solo')">Solo</button>
-                    <button class="team-mode-btn" data-team="team5" onclick="setTeamMode('team5')">Time (5)</button>
-                    <button class="team-mode-btn" data-team="team10" onclick="setTeamMode('team10')">5v5 (10)</button>
-                </div>
-            </div>
-
-            <div class="chaos-toggle-container" id="fearlessContainer">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="fearlessToggle" onchange="toggleFearless()">
-                    <span class="toggle-slider"></span>
-                </label>
-                <div>
-                    <span class="chaos-label">Fearless Draft</span>
-                    <span class="chaos-sublabel">Campeões usados saem do pool</span>
-                </div>
-                <span class="chaos-status off" id="fearlessStatus">OFF</span>
-            </div>
-
             <div class="button-group">
                 <button class="btn btn-primary" id="spinBtn" onclick="spin()">Roletar</button>
                 <button class="btn btn-secondary" id="resetBtn" onclick="confirmReset()">Resetar</button>
             </div>
 
+            <div class="settings-panel">
+                <div class="team-mode-container">
+                    <span class="team-mode-label">Modo:</span>
+                    <div class="team-mode-buttons">
+                        <button class="team-mode-btn active" data-team="solo" onclick="setTeamMode('solo')">Solo</button>
+                        <button class="team-mode-btn" data-team="team5" onclick="setTeamMode('team5')">Time (5)</button>
+                        <button class="team-mode-btn" data-team="team10" onclick="setTeamMode('team10')">5v5 (10)</button>
+                    </div>
+                </div>
+                <div class="divider-line"></div>
+                <div class="chaos-toggle-container" id="fearlessContainer">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="fearlessToggle" onchange="toggleFearless()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <div>
+                        <span class="chaos-label">Fearless Draft</span>
+                        <span class="chaos-sublabel">Campeões usados saem do pool</span>
+                    </div>
+                    <span class="chaos-status off" id="fearlessStatus">OFF</span>
+                </div>
+                <div class="divider-line"></div>
+                <div class="chaos-toggle-container">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="chaosToggle" onchange="toggleChaos()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <div>
+                        <span class="chaos-label">Chaos AI</span>
+                        <span class="chaos-sublabel">Build aleatória com itens</span>
+                    </div>
+                    <span class="chaos-status off" id="chaosStatus">OFF</span>
+                </div>
+                <div class="mode-selector-container" id="modeSelectorContainer">
+                    <span class="mode-label">Modo:</span>
+                    <div class="mode-buttons">
+                        <button class="mode-btn active" data-mode="CLASSIC" onclick="setGameMode('CLASSIC')">Normal</button>
+                        <button class="mode-btn" data-mode="ARAM" onclick="setGameMode('ARAM')">ARAM</button>
+                        <button class="mode-btn" data-mode="URF" onclick="setGameMode('URF')">Treta</button>
+                        <button class="mode-btn" data-mode="CHERRY" onclick="setGameMode('CHERRY')">Arena</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="team-display" id="teamDisplay">
                 <div class="teams-wrapper" id="teamsWrapper"></div>
-            </div>
-
-            <div class="chaos-toggle-container">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="chaosToggle" onchange="toggleChaos()">
-                    <span class="toggle-slider"></span>
-                </label>
-                <div>
-                    <span class="chaos-label">Chaos AI</span>
-                    <span class="chaos-sublabel">Build aleatória com itens</span>
-                </div>
-                <span class="chaos-status off" id="chaosStatus">OFF</span>
-            </div>
-
-            <div class="mode-selector-container" id="modeSelectorContainer">
-                <span class="mode-label">Modo:</span>
-                <div class="mode-buttons">
-                    <button class="mode-btn active" data-mode="CLASSIC" onclick="setGameMode('CLASSIC')">Normal</button>
-                    <button class="mode-btn" data-mode="ARAM" onclick="setGameMode('ARAM')">ARAM</button>
-                    <button class="mode-btn" data-mode="URF" onclick="setGameMode('URF')">Treta</button>
-                    <button class="mode-btn" data-mode="CHERRY" onclick="setGameMode('CHERRY')">Arena</button>
-                </div>
             </div>
 
             <div class="build-section" id="buildSection">
@@ -1923,21 +2026,6 @@
             <div class="finished-message" id="finishedMessage">
                 <h3>Todos os Campeões Foram Sorteados!</h3>
                 <p>Resete para começar uma nova sessão.</p>
-            </div>
-
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-value" id="remainingCount">0</div>
-                    <div class="stat-label">Restantes</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="playedCount">0</div>
-                    <div class="stat-label">Jogados</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="totalCount">0</div>
-                    <div class="stat-label">Total</div>
-                </div>
             </div>
         </div>
 
